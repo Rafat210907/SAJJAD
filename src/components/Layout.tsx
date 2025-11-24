@@ -1,7 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, lazy, Suspense } from "react";
 import { Sidebar } from "./Sidebar";
-import { CursorFollower } from "./CursorFollower";
 import { PageTransition } from "./PageTransition";
+
+const CursorFollower = lazy(() => 
+  import("./CursorFollower").then(module => ({ default: module.CursorFollower }))
+);
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,7 +13,9 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
-      <CursorFollower />
+      <Suspense fallback={null}>
+        <CursorFollower />
+      </Suspense>
       <Sidebar />
       <main className="ml-64 min-h-screen">
         <PageTransition>

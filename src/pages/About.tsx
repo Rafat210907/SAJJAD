@@ -166,8 +166,9 @@ const About = () => {
                         <span className="text-muted-foreground">{animatedValue}%</span>
                       </div>
                       <div className="h-1 bg-secondary rounded-full overflow-hidden">
-                        <div className="h-full bg-accent transition-all transition-duration-[2000ms] ease-out" style={{
-                      width: programmingVisible ? `${skill.percentage}%` : '0%'
+                        <div className="h-full bg-accent transition-all ease-out" style={{
+                      width: programmingVisible ? `${skill.percentage}%` : '0%',
+                      transitionDuration: '2000ms'
                     }}></div>
                       </div>
                     </div>;
@@ -190,8 +191,9 @@ const About = () => {
                         <span className="text-muted-foreground">{animatedValue}%</span>
                       </div>
                       <div className="h-1 bg-secondary rounded-full overflow-hidden">
-                        <div className="h-full bg-accent transition-all transition-duration-[2000ms] ease-out" style={{
-                      width: languageVisible ? `${skill.percentage}%` : '0%'
+                        <div className="h-full bg-accent transition-all ease-out" style={{
+                      width: languageVisible ? `${skill.percentage}%` : '0%',
+                      transitionDuration: '2000ms'
                     }}></div>
                       </div>
                     </div>;

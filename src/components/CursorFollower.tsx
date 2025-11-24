@@ -6,14 +6,24 @@ export const CursorFollower = () => {
 
   useEffect(() => {
     let rafId: number;
+    let lastX = 0;
+    let lastY = 0;
 
     const updatePosition = (e: MouseEvent) => {
+      // Skip if mouse hasn't moved enough (reduce unnecessary updates)
+      if (Math.abs(e.clientX - lastX) < 2 && Math.abs(e.clientY - lastY) < 2) {
+        return;
+      }
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
       
       rafId = requestAnimationFrame(() => {
-        setPosition({ x: e.clientX, y: e.clientY });
+        setPosition({ x: lastX, y: lastY });
         setIsVisible(true);
       });
     };
@@ -22,7 +32,8 @@ export const CursorFollower = () => {
       setIsVisible(false);
     };
 
-    window.addEventListener("mousemove", updatePosition);
+    // Use passive listener for better scrolling performance
+    window.addEventListener("mousemove", updatePosition, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
@@ -36,7 +47,7 @@ export const CursorFollower = () => {
 
   return (
     <div
-      className="pointer-events-none fixed z-[9999] w-3 h-3 rounded-full transition-opacity duration-200"
+      className="pointer-events-none fixed z-[9999] w-3 h-3 rounded-full transition-opacity duration-200 hidden md:block"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -45,6 +56,7 @@ export const CursorFollower = () => {
         boxShadow: '0 0 10px rgba(25, 166, 144, 0.5)',
         opacity: isVisible ? 1 : 0,
         willChange: 'transform',
+        contain: 'layout style paint',
       }}
     />
   );

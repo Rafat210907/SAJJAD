@@ -8,28 +8,30 @@ export const useTypingEffect = (texts: string[], typingSpeed: number = 100, dele
 
   useEffect(() => {
     const currentText = texts[textIndex];
+    let timeoutId: NodeJS.Timeout;
     
     if (!isDeleting && currentIndex < currentText.length) {
-      const timeout = setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setDisplayedText(prev => prev + currentText[currentIndex]);
         setCurrentIndex(prev => prev + 1);
       }, typingSpeed);
-      return () => clearTimeout(timeout);
     } else if (!isDeleting && currentIndex === currentText.length) {
-      const timeout = setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setIsDeleting(true);
       }, pauseDuration);
-      return () => clearTimeout(timeout);
     } else if (isDeleting && currentIndex > 0) {
-      const timeout = setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setDisplayedText(prev => prev.slice(0, -1));
         setCurrentIndex(prev => prev - 1);
       }, deletingSpeed);
-      return () => clearTimeout(timeout);
     } else if (isDeleting && currentIndex === 0) {
       setIsDeleting(false);
       setTextIndex((prev) => (prev + 1) % texts.length);
     }
+    
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [currentIndex, isDeleting, textIndex, texts, typingSpeed, deletingSpeed, pauseDuration]);
 
   return displayedText;

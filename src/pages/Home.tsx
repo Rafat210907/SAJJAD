@@ -1,5 +1,5 @@
 import { Facebook, Github, Instagram, Youtube } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/profile-photo-optimized.jpg";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
 const Home = () => {
   const typedText = useTypingEffect(["Graphic Designer", "Motion Graphics Artist"], 100, 50, 2000);
@@ -24,7 +24,7 @@ const Home = () => {
   return <main className="flex items-center justify-center min-h-screen px-8 md:px-16">
       <section className="flex flex-col md:flex-row items-center gap-12 md:gap-20 max-w-6xl w-full animate-fade-in">
         {/* Profile Image */}
-        <div className="relative animate-scale-in">
+        <div className="relative animate-scale-in will-change-transform">
           {/* Colored background */}
           <div className="absolute inset-0 w-52 h-52 md:w-60 md:h-60 animate-blob" style={{
           borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
@@ -40,6 +40,7 @@ const Home = () => {
               alt="Sajjad Islam - Professional Graphic Designer and Motion Graphics Artist specializing in Adobe After Effects and brand identity design" 
               className="w-full h-full object-cover grayscale transition-all duration-500"
               loading="eager"
+              fetchPriority="high"
               width="240"
               height="240"
             />

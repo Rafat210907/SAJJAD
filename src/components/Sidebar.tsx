@@ -1,4 +1,4 @@
-import { Home, User, Briefcase, FolderOpen, Newspaper, Mail, Moon, Sun, Star } from "lucide-react";
+import { Home, User, Briefcase, FolderOpen, Newspaper, Mail, Moon, Sun } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useState, useEffect } from "react";
 export const Sidebar = () => {
@@ -40,10 +40,6 @@ export const Sidebar = () => {
     to: "/contact",
     icon: Mail,
     label: "Contact"
-  }, {
-    to: "/reviews",
-    icon: Star,
-    label: "Reviews"
   }];
   return <aside className="fixed left-0 top-0 h-screen w-64 bg-card border-r border-border flex flex-col p-8 z-50">
       {/* Logo */}

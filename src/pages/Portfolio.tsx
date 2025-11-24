@@ -181,10 +181,11 @@ const Portfolio = () => {
     };
 
     if (platform === 'copy') {
-      navigator.clipboard.writeText(shareUrl);
+      const copyText = `${shareUrl} ${selectedProjectData.image}`;
+      navigator.clipboard.writeText(copyText);
       toast({
         title: "Link copied!",
-        description: "Project link copied to clipboard",
+        description: "Project link and image URL copied to clipboard",
       });
       return;
     }
