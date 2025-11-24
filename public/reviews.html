@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .review {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .review strong {
+            color: #333;
+        }
+        .review span {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Reviews</h1>
+    <div id="reviews-container">
+        <!-- Reviews will be loaded here -->
+    </div>
+
+    <script>
+        async function loadReviews() {
+            try {
+                const response = await fetch('/api/reviews');
+                const reviews = await response.json();
+                const container = document.getElementById('reviews-container');
+                container.innerHTML = '';
+                reviews.forEach(review => {
+                    const reviewElement = document.createElement('div');
+                    reviewElement.className = 'review';
+                    reviewElement.innerHTML = `<p><strong>${review.user}</strong> — ${review.review} <span>(${new Date(review.date).toLocaleDateString()})</span></p>`;
+                    container.appendChild(reviewElement);
+                });
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
+        }
+
+        // Load reviews on page load
+        loadReviews();
+
+        // Reload reviews every 30 seconds
+        setInterval(loadReviews, 30000);
+    </script>
+</body>
+</html>
